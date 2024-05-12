@@ -1,0 +1,422 @@
+namespace _2дз
+{
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+  
+    // 1)
+    /*class Program
+    {
+        static void Main()
+        {
+            double[] A = new double[5];
+            double[,] B = new double[3, 4];
+            Random random = new Random();
+
+
+            Console.WriteLine("Введите 5 чисел для массива A:");
+            for (int i = 0; i < 5; i++)
+            {
+                A[i] = Convert.ToDouble(Console.ReadLine());
+            }
+
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    B[i, j] = random.NextDouble() * 100;
+                }
+            }
+
+
+            Console.WriteLine("Массив A:");
+            foreach (var item in A)
+            {
+                Console.Write("{0} ", item);
+            }
+            Console.WriteLine();
+
+
+            Console.WriteLine("Массив B:");
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Console.Write("{0} ", B[i, j]);
+                }
+                Console.WriteLine();
+            }
+
+
+            double maxA = A.Max();
+            double maxB = B.Cast<double>().Max();
+            double minA = A.Min();
+            double minB = B.Cast<double>().Min();
+            double sumA = A.Sum();
+            double sumB = B.Cast<double>().Sum();
+
+            Console.WriteLine("Общий максимальный элемент: {0}", Math.Max(maxA, maxB));
+            Console.WriteLine("Общий минимальный элемент: {0}", Math.Min(minA, minB));
+            Console.WriteLine("Общая сумма всех элементов: {0}", sumA + sumB);
+
+
+            double productA = A.Aggregate(1.0, (acc, x) => acc * x);
+            double productB = B.Cast<double>().Aggregate(1.0, (acc, x) => acc * x);
+            double totalProduct = productA * productB;
+            Console.WriteLine("Общее произведение всех элементов: {0}", totalProduct);
+
+
+            double sumEvenA = A.Where(x => x % 2 == 0).Sum();
+            Console.WriteLine("Сумма четных элементов массива A: {0}", sumEvenA);
+
+
+            double sumOddColumnsB = 0;
+            for (int j = 0; j < 4; j++)
+            {
+                double columnSum = 0;
+                for (int i = 0; i < 3; i++)
+                {
+                    columnSum += B[i, j];
+                }
+                if (j % 2 != 0)
+                {
+                    sumOddColumnsB += columnSum;
+                }
+            }
+            Console.WriteLine("Сумма нечетных столбцов массива B: {0}", sumOddColumnsB);
+        }
+    }*/
+    //2)
+    /* class Program
+     {
+         static void Main()
+         {
+             int[,] array = new int[5, 5];
+             Random random = new Random();
+
+
+             for (int i = 0; i < 5; i++)
+             {
+                 for (int j = 0; j < 5; j++)
+                 {
+                     array[i, j] = random.Next(-100, 101); 
+                 }
+             }
+
+
+             Console.WriteLine("Исходный массив:");
+             for (int i = 0; i < 5; i++)
+             {
+                 for (int j = 0; j < 5; j++)
+                 {
+                     Console.Write(array[i, j] + "\t");
+                 }
+                 Console.WriteLine();
+             }
+
+
+             int min = array[0, 0];
+             int max = array[0, 0];
+             foreach (int element in array)
+             {
+                 if (element < min)
+                 {
+                     min = element;
+                 }
+                 if (element > max)
+                 {
+                     max = element;
+                 }
+             }
+
+
+             int sum = 0;
+             bool betweenMinMax = false;
+             foreach (int element in array)
+             {
+                 if (element == min)
+                 {
+                     betweenMinMax = !betweenMinMax;
+                 }
+                 else if (element == max)
+                 {
+                     break;
+                 }
+                 if (betweenMinMax)
+                 {
+                     sum += element;
+                 }
+             }
+
+             Console.WriteLine("Минимальный элемент: {0}", min);
+             Console.WriteLine("Максимальный элемент: {0}", max);
+             Console.WriteLine("Сумма элементов между минимальным и максимальным элементами: {0}", sum);
+         }
+     }*/
+    //3)
+    /* class Program
+     {
+         static void Main()
+         {
+             Console.WriteLine("Введите строку для шифрования:");
+             string input = Console.ReadLine();
+             int shift = 3; 
+
+             string encrypted = Encrypt(input, shift);
+             Console.WriteLine($"Зашифрованная строка: {encrypted}");
+
+             string decrypted = Decrypt(encrypted, shift);
+             Console.WriteLine($"Расшифрованная строка: {decrypted}");
+         }
+
+         static string Encrypt(string input, int shift)
+         {
+             char[] characters = input.ToCharArray();
+
+             for (int i = 0; i < characters.Length; i++)
+             {
+                 if (char.IsLetter(characters[i]))
+                 {
+                     char baseChar = char.IsUpper(characters[i]) ? 'A' : 'a';
+                     characters[i] = (char)(((characters[i] + shift - baseChar) % 26) + baseChar);
+                 }
+             }
+
+             return new string(characters);
+         }
+
+         static string Decrypt(string input, int shift)
+         {
+             return Encrypt(input, 26 - shift);
+         }
+     }*/
+    //4)
+    /* class MatrixOperations
+     {
+         static void Main()
+         {
+             int[,] matrix1 = new int[,]
+             {
+             {1, 2, 3},
+             {4, 5, 6}
+             };
+
+             int[,] matrix2 = new int[,]
+             {
+             {7, 8, 9},
+             {10, 11, 12}
+             };
+
+             int scalar = 2;
+
+             Console.WriteLine("Матрица 1:");
+             PrintMatrix(matrix1);
+
+             Console.WriteLine("\nМатрица 2:");
+             PrintMatrix(matrix2);
+
+             int[,] result1 = MultiplyByScalar(matrix1, scalar);
+             Console.WriteLine("\nРезультат умножения матрицы на число:");
+             PrintMatrix(result1);
+
+             int[,] result2 = AddMatrices(matrix1, matrix2);
+             Console.WriteLine("\nРезультат сложения матриц:");
+             PrintMatrix(result2);
+
+             int[,] result3 = MultiplyMatrices(matrix1, matrix2);
+             Console.WriteLine("\nРезультат произведения матриц:");
+             PrintMatrix(result3);
+         }
+
+         static int[,] MultiplyByScalar(int[,] matrix, int scalar)
+         {
+             int rows = matrix.GetLength(0);
+             int cols = matrix.GetLength(1);
+             int[,] result = new int[rows, cols];
+
+             for (int i = 0; i < rows; i++)
+             {
+                 for (int j = 0; j < cols; j++)
+                 {
+                     result[i, j] = matrix[i, j] * scalar;
+                 }
+             }
+
+             return result;
+         }
+
+         static int[,] AddMatrices(int[,] matrix1, int[,] matrix2)
+         {
+             int rows = matrix1.GetLength(0);
+             int cols = matrix1.GetLength(1);
+             int[,] result = new int[rows, cols];
+
+             for (int i = 0; i < rows; i++)
+             {
+                 for (int j = 0; j < cols; j++)
+                 {
+                     result[i, j] = matrix1[i, j] + matrix2[i, j];
+                 }
+             }
+
+             return result;
+         }
+
+         static int[,] MultiplyMatrices(int[,] matrix1, int[,] matrix2)
+         {
+             int rows1 = matrix1.GetLength(0);
+             int cols1 = matrix1.GetLength(1);
+             int cols2 = matrix2.GetLength(1);
+             int[,] result = new int[rows1, cols2];
+
+             for (int i = 0; i < rows1; i++)
+             {
+                 for (int j = 0; j < cols2; j++)
+                 {
+                     for (int k = 0; k < cols1; k++)
+                     {
+                         result[i, j] += matrix1[i, k] * matrix2[k, j];
+                     }
+                 }
+             }
+
+             return result;
+         }
+
+         static void PrintMatrix(int[,] matrix)
+         {
+             int rows = matrix.GetLength(0);
+             int cols = matrix.GetLength(1);
+
+             for (int i = 0; i < rows; i++)
+             {
+                 for (int j = 0; j < cols; j++)
+                 {
+                     Console.Write(matrix[i, j] + " ");
+                 }
+                 Console.WriteLine();
+             }
+         }
+     }*/
+    //5)
+
+    /* class ArithmeticCalculator
+     {
+         static void Main()
+         {
+             Console.WriteLine("Введите арифметическое выражение (только + и -):");
+             string input = Console.ReadLine();
+
+             int result = CalculateExpression(input);
+
+             Console.WriteLine("Результат: " + result);
+         }
+
+         static int CalculateExpression(string input)
+         {
+             int result = 0;
+             int currentNumber = 0;
+             char operation = '+';
+
+             for (int i = 0; i < input.Length; i++)
+             {
+                 char currentChar = input[i];
+
+                 if (char.IsDigit(currentChar))
+                 {
+                     currentNumber = currentNumber * 10 + (currentChar - '0');
+                 }
+
+                 if (!char.IsDigit(currentChar) && currentChar != ' ' || i == input.Length - 1)
+                 {
+                     if (operation == '+')
+                     {
+                         result += currentNumber;
+                     }
+                     else if (operation == '-')
+                     {
+                         result -= currentNumber;
+                     }
+
+                     currentNumber = 0;
+                     operation = currentChar;
+                 }
+             }
+
+             return result;
+         }
+     }*/
+    //6)
+
+    /*class TextProcessor
+    {
+        static void Main()
+        {
+            Console.WriteLine("Введите текст:");
+            string input = Console.ReadLine();
+
+            string result = ChangeFirstLetterCase(input);
+
+            Console.WriteLine("Результат:");
+            Console.WriteLine(result);
+        }
+
+        static string ChangeFirstLetterCase(string input)
+        {
+            string[] sentences = input.Split('.', '!', '?');
+
+            for (int i = 0; i < sentences.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(sentences[i]))
+                {
+                    sentences[i] = char.ToUpper(sentences[i].Trim()[0]) + sentences[i].Trim().Substring(1);
+                }
+            }
+
+            return string.Join(". ", sentences);
+        }
+    }
+*/
+    //7)
+    /* class WordChecker
+     {
+         static void Main()
+         {
+             Console.WriteLine("Введите текст:");
+             string input = Console.ReadLine();
+
+             string[] forbiddenWords = { "die" }; // Заданные недопустимые слова
+
+             string result = CheckForbiddenWords(input, forbiddenWords, out int replacementsCount);
+
+             Console.WriteLine("Результат:");
+             Console.WriteLine(result);
+
+             Console.WriteLine($"Статистика: {replacementsCount} замены(-ей) слова(-слов)");
+         }
+
+         static string CheckForbiddenWords(string input, string[] forbiddenWords, out int replacementsCount)
+         {
+             replacementsCount = 0;
+
+             List<string> words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+
+             for (int i = 0; i < words.Count; i++)
+             {
+                 foreach (string forbiddenWord in forbiddenWords)
+                 {
+                     if (words[i].Equals(forbiddenWord, StringComparison.OrdinalIgnoreCase))
+                     {
+                         words[i] = new string('*', forbiddenWord.Length);
+                         replacementsCount++;
+                     }
+                 }
+             }
+
+             return string.Join(" ", words);
+         }
+     }*/
+
+
+}
